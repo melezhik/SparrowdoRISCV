@@ -4,7 +4,17 @@ How to run Rocky Linux Sparky tests on your RISCV box over ssh or localhost
 
 # Prerequisites 
 
-You have box with RISCV architecture with Rocky Linux OS installed, you have access to this box over ssh or localhost. 
+You have box with RISCV architecture with Rocky Linux OS installed
+
+# Install Rakupp
+
+```
+sudo yum -q -y install curl wget openssl-devel perl-JSON-PP
+sudo curl -L -s -f  http://sparrowhub.io/riscv/rakupp -o /usr/local/bin/rakupp
+sudo chmod a+x /usr/local/bin/rakupp
+sudo ln -fs /usr/local/bin/rakupp /usr/local/bin/raku
+rakupp install --no-test Sparrow6
+```
 
 # Install Sparrowdo
 
@@ -13,7 +23,8 @@ You'll need the latest Sparrowdo version from GitHub:
 ```
 git clone https://github.com/melezhik/sparrowdo.git
 cd sparrowdo
-zef install --/test --force-install .
+rakupp install —test .
+export PATH=~/.raku/bin:$PATH
 ```
 
 Run `sparrowodo --version`, you should see something like 
@@ -41,7 +52,7 @@ sparrowdo --localhost --no_sudo --sparrowfile main.raku --color
 
 ## Ssh
 
-If you want to run against some ssh box:
+If you want to run against some RISC-V ssh box:
 
 ```
 cd Sparky-Python-SSL
